@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,7 +31,7 @@ public class RecursoController
 	}
 
 	@GetMapping
-	public ResponseEntity<List<RecursoResponseDTO>> getRecurso() 
+	public ResponseEntity<List<RecursoResponseDTO>> findAll() 
 	{
 		return ResponseEntity.ok(recursoService.findAll());
 	}
@@ -50,6 +51,13 @@ public class RecursoController
 	{
 		RecursoResponseDTO recursoResponseDTO = recursoService.update(id, recursoRequestDTO);
 		return ResponseEntity.ok(recursoResponseDTO);
+	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<List<RecursoResponseDTO>> delete(@PathVariable Long id)
+	{
+		List<RecursoResponseDTO> recursosResponseDTO = recursoService.delete(id);
+		return ResponseEntity.ok().body(recursosResponseDTO);
 	}
 	
 }

@@ -51,6 +51,17 @@ public class RecursoService {
 					.map(recurso -> recursoMapper.toDto(recurso)).toList();
 	};
 	
+	public List<RecursoResponseDTO> delete(Long id)
+	{
+		if(!isExisteRecurso(id)) 
+		{
+			throw new RecursoNaoExisteException("Recurso com o ID informado não existe");
+		}
+		
+		recursoRepository.deleteById(id);
+		return findAll();
+	}
+	
 	public boolean isExisteRecurso(Long id)
 	{
 	    return recursoRepository.existsById(id);

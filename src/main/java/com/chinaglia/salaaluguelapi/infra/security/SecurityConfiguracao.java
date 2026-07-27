@@ -36,6 +36,7 @@ public class SecurityConfiguracao {
 	                    .requestMatchers(HttpMethod.GET, "/recursos").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/recursos").permitAll()
 	                    .requestMatchers(HttpMethod.PUT, "/recursos/{id}").permitAll()
+	                    .requestMatchers(HttpMethod.DELETE, "/recursos/{id}").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/auth/registrar").permitAll()
 	                    .requestMatchers(HttpMethod.GET, "/", "/*.html", "/*.css", "/*.js", "/css/**", "/js/**").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/sala").hasRole("ADMIN")

@@ -1,6 +1,7 @@
 package com.chinaglia.salaaluguelapi.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,37 +20,36 @@ import com.chinaglia.salaaluguelapi.service.RecursoService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value="/recurso")
+@RequestMapping(value="/recursos") 
 public class RecursoController 
 {
-	
 	private final RecursoService recursoService;
 	
 	public RecursoController(RecursoService recursoService) {
 		this.recursoService = recursoService;
 	}
 
-	@GetMapping("/recurso")
-	public String getRecurso() 
+	@GetMapping
+	public ResponseEntity<List<RecursoResponseDTO>> getRecurso() 
 	{
-		return "Rota funcoinadno";
+		return ResponseEntity.ok(recursoService.findAll());
 	}
 	
-	@PostMapping("/recurso")
+	@PostMapping 
 	public ResponseEntity<RecursoResponseDTO> insert(@RequestBody @Valid RecursoRequestDTO recursoRequestDTO)
 	{
 		RecursoResponseDTO recursoResponseDTO = recursoService.save(recursoRequestDTO);
-		URI location = ServletUriComponentsBuilder.fromCurrentRequest().
-				path("/{id}").buildAndExpand(recursoResponseDTO.id()).toUri();
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(recursoResponseDTO.id()).toUri();
 		
-		return ResponseEntity.created(location).build();
+		return ResponseEntity.created(location).body(recursoResponseDTO);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/{id}") 
 	public ResponseEntity<RecursoResponseDTO> update(@PathVariable Long id, @RequestBody @Valid RecursoRequestDTO recursoRequestDTO)
 	{
 		RecursoResponseDTO recursoResponseDTO = recursoService.update(id, recursoRequestDTO);
-		return ResponseEntity.ok().body(recursoResponseDTO);
+		return ResponseEntity.ok(recursoResponseDTO);
 	}
 	
 }

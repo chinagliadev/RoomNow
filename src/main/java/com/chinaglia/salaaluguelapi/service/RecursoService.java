@@ -1,5 +1,8 @@
 package com.chinaglia.salaaluguelapi.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.chinaglia.salaaluguelapi.dto.RecursoRequestDTO;
@@ -39,6 +42,14 @@ public class RecursoService {
 		Recurso salvo = recursoRepository.save(recurso); 
 		return recursoMapper.toDto(salvo);   
 	}
+	
+	public List<RecursoResponseDTO> findAll()
+	{
+		RecursoMapper recursoMapper = new RecursoMapper();
+		return recursoRepository.findAll().
+					stream()
+					.map(recurso -> recursoMapper.toDto(recurso)).toList();
+	};
 	
 	public boolean isExisteRecurso(Long id)
 	{

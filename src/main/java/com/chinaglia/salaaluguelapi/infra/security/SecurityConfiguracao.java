@@ -31,11 +31,11 @@ public class SecurityConfiguracao {
 	            .csrf(csrf -> csrf.disable())
 	            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	            .authorizeHttpRequests(authorize -> authorize
-	                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <- libera o preflight
+	                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-	                    .requestMatchers(HttpMethod.GET, "/recurso").permitAll()
-	                    .requestMatchers(HttpMethod.POST, "/recurso").permitAll()
-	                    .requestMatchers(HttpMethod.PUT, "/recurso/{id}").permitAll()
+	                    .requestMatchers(HttpMethod.GET, "/recursos").permitAll()
+	                    .requestMatchers(HttpMethod.POST, "/recursos").permitAll()
+	                    .requestMatchers(HttpMethod.PUT, "/recursos/{id}").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/auth/registrar").permitAll()
 	                    .requestMatchers(HttpMethod.GET, "/", "/*.html", "/*.css", "/*.js", "/css/**", "/js/**").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/sala").hasRole("ADMIN")

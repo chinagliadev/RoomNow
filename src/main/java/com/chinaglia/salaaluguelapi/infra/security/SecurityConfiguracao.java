@@ -33,6 +33,8 @@ public class SecurityConfiguracao {
 	            .authorizeHttpRequests(authorize -> authorize
 	                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll() // <- libera o preflight
 	                    .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+	                    .requestMatchers(HttpMethod.GET, "/recurso").permitAll()
+	                    .requestMatchers(HttpMethod.POST, "/recurso").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/auth/registrar").permitAll()
 	                    .requestMatchers(HttpMethod.GET, "/", "/*.html", "/*.css", "/*.js", "/css/**", "/js/**").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/sala").hasRole("ADMIN")

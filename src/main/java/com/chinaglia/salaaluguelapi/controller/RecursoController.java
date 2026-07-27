@@ -1,0 +1,46 @@
+package com.chinaglia.salaaluguelapi.controller;
+
+import java.net.URI;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import com.chinaglia.salaaluguelapi.dto.RecursoRequestDTO;
+import com.chinaglia.salaaluguelapi.dto.RecursoResponseDTO;
+import com.chinaglia.salaaluguelapi.service.RecursoService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping(value="/")
+public class RecursoController 
+{
+	
+	private final RecursoService recursoService;
+	
+	public RecursoController(RecursoService recursoService) {
+		this.recursoService = recursoService;
+	}
+
+	@GetMapping("/recurso")
+	public String getRecurso() 
+	{
+		return "Rota funcoinadno";
+	}
+	
+	@PostMapping("/recurso")
+	public ResponseEntity<RecursoResponseDTO> insert(@RequestBody @Valid RecursoRequestDTO recursoRequestDTO)
+	{
+		RecursoResponseDTO recursoResponseDTO = recursoService.save(recursoRequestDTO);
+		URI location = ServletUriComponentsBuilder.fromCurrentRequest().
+				path("/{id}").buildAndExpand(recursoResponseDTO.id()).toUri();
+		
+		return ResponseEntity.created(location).build();
+	}
+	
+}

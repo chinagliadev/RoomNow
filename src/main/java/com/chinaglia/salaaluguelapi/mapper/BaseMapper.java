@@ -1,10 +1,9 @@
 package com.chinaglia.salaaluguelapi.mapper;
 
-public interface BaseMapper<D, E> {
-	
-	D toDto(E entity);
-	
-	E toEntity(D dto);
-	
-}
+public interface BaseMapper<REQ, RES, E> {
 
+	RES toDto(E entity);
+
+	E toEntity(REQ dto);
+
+}

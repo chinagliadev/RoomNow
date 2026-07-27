@@ -7,7 +7,7 @@ import com.chinaglia.salaaluguelapi.entity.Usuario;
 import com.chinaglia.salaaluguelapi.enums.UserRole;
 
 @Component
-public class UsuarioMapper implements BaseMapper<UsuarioDTO, Usuario>{
+public class UsuarioMapper implements BaseMapper<UsuarioDTO, UsuarioDTO, Usuario>{
 
 	/**
 	 * Metodo utilitario para mapear as entity para DTO

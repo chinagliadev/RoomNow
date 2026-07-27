@@ -50,4 +50,11 @@ public class GlobalException{
 	    return ResponseEntity.badRequest().body(List.of(exceptionMessage));
 	}
 	
+	@ExceptionHandler(RecursoNaoExisteException.class)
+	public ResponseEntity<List<ExceptionMessage>> hadleValidacaoRecurso(RecursoNaoExisteException exception)
+	{
+		String mensagem = exception.getMessage();
+	    ExceptionMessage exceptionMessage = new ExceptionMessage(Instant.now(), HttpStatus.BAD_REQUEST.value(), mensagem);
+	    return ResponseEntity.badRequest().body(List.of(exceptionMessage));
+	}
 }

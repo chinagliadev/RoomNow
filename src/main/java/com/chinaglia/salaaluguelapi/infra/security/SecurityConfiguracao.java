@@ -35,6 +35,7 @@ public class SecurityConfiguracao {
 	                    .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 	                    .requestMatchers(HttpMethod.GET, "/recurso").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/recurso").permitAll()
+	                    .requestMatchers(HttpMethod.PUT, "/recurso/{id}").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/auth/registrar").permitAll()
 	                    .requestMatchers(HttpMethod.GET, "/", "/*.html", "/*.css", "/*.js", "/css/**", "/js/**").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/sala").hasRole("ADMIN")

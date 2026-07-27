@@ -1,9 +1,12 @@
 package com.chinaglia.salaaluguelapi.entity;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -25,6 +28,9 @@ public class Recurso implements Serializable{
 	private Long id;
 	private String nome;
 	private String descricao;
+	
+	@UpdateTimestamp
+	private LocalDateTime ultimaAlteracao;
 	
 	@OneToMany(mappedBy = "recurso", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<SalaRecurso> salas = new HashSet<>();

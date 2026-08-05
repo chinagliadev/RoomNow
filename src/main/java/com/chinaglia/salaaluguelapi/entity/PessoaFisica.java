@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -21,9 +22,10 @@ public class PessoaFisica implements Serializable{
 	private String cpf;
 	private String rg;
 	
-	@OneToOne
-	@MapsId
-	private Cliente cliente;
+    @OneToOne
+    @MapsId // Informa que o ID desta entidade é o mesmo do objeto 'cliente'
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 	
 	public PessoaFisica() {}
 

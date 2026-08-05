@@ -35,6 +35,8 @@ public class SecurityConfiguracao {
 	                    .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 	                    .requestMatchers(HttpMethod.GET, "/recursos").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/recursos").permitAll()
+	                    .requestMatchers(HttpMethod.GET, "/clientes").permitAll()
+	                    .requestMatchers(HttpMethod.POST, "/clientes").permitAll()
 	                    .requestMatchers(HttpMethod.PUT, "/recursos/{id}").permitAll()
 	                    .requestMatchers(HttpMethod.DELETE, "/recursos/{id}").permitAll()
 	                    .requestMatchers(HttpMethod.POST, "/auth/registrar").permitAll()

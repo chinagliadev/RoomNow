@@ -8,6 +8,7 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,15 +27,16 @@ public class Sala implements Serializable{
 	private String numero;
 	private String nome;
 	
-	@OneToMany(mappedBy = "sala", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	private Set<SalaRecurso> recursos = new HashSet<>();
 	
-	@OneToMany(mappedBy = "sala", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "sala", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<AluguelSala> alugueis= new HashSet<>();
 	
 	private Integer capacidade;
 	private BigDecimal valor_hora;
-	private boolean status;
+	
+	private boolean status = true;
 	
 	public Sala() {}
 	
@@ -84,12 +86,12 @@ public class Sala implements Serializable{
 		this.status = status;
 	}
 
-	public void setRecursos(Set<SalaRecurso> recursos) {
-		this.recursos = recursos;
+	public Set<SalaRecurso> getRecursos() {
+		return recursos;
 	}
 
-	public void setAlugueis(Set<AluguelSala> alugueis) {
-		this.alugueis = alugueis;
+	public Set<AluguelSala> getAlugueis() {
+		return alugueis;
 	}
 
 	@Override
@@ -107,6 +109,23 @@ public class Sala implements Serializable{
 			return false;
 		Sala other = (Sala) obj;
 		return Objects.equals(id, other.id);
+	}
+	
+	public void adicionarRecurso(SalaRecurso sr) {
+	    recursos.add(sr);
+	    sr.setSala(this);
+	}
+
+	public void removerRecurso(SalaRecurso sr) {
+	    recursos.remove(sr);
+	    sr.setSala(null);
+	}
+	
+	public void atualizarRecursos(Set<SalaRecurso> novosRecursos) {
+	    this.recursos.clear();
+	    for (SalaRecurso sr : novosRecursos) {
+	        adicionarRecurso(sr);
+	    }
 	}
 	
 }

@@ -6,12 +6,16 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,19 +27,24 @@ public class Cliente implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String tipo;
 	private String telefone;
+	
+	@UpdateTimestamp
 	private LocalDateTime dataCadastro;
+
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private PessoaFisica pessoaFisica;
+
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private PessoaJuridica pessoaJuridica;
 	
-	
-	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<AluguelSala> alugueis = new HashSet<>();
 	
 	public Cliente() {}
 
-	public Cliente(Long id, String tipo, String telefone, LocalDateTime dataCadastro) {
+	public Cliente(Long id, String telefone, LocalDateTime dataCadastro) {
 		this.id = id;
-		this.tipo = tipo;
 		this.telefone = telefone;
 		this.dataCadastro = dataCadastro;
 	}
@@ -45,12 +54,6 @@ public class Cliente implements Serializable{
 	}
 	public void setId(Long id) {
 		this.id = id;
-	}
-	public String getTipo() {
-		return tipo;
-	}
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
 	}
 	public String getTelefone() {
 		return telefone;
@@ -63,6 +66,22 @@ public class Cliente implements Serializable{
 	}
 	public void setDataCadastro(LocalDateTime dataCadastro) {
 		this.dataCadastro = dataCadastro;
+	}
+
+	public PessoaFisica getPessoaFisica() {
+		return pessoaFisica;
+	}
+
+	public void setPessoaFisica(PessoaFisica pessoaFisica) {
+		this.pessoaFisica = pessoaFisica;
+	}
+
+	public PessoaJuridica getPessoaJuridica() {
+		return pessoaJuridica;
+	}
+
+	public void setPessoaJuridica(PessoaJuridica pessoaJuridica) {
+		this.pessoaJuridica = pessoaJuridica;
 	}
 
 	public Set<AluguelSala> getAlugueis() {

@@ -57,4 +57,12 @@ public class GlobalException{
 	    ExceptionMessage exceptionMessage = new ExceptionMessage(Instant.now(), HttpStatus.BAD_REQUEST.value(), mensagem);
 	    return ResponseEntity.badRequest().body(List.of(exceptionMessage));
 	}
+	
+	@ExceptionHandler(SalaNaoExisteException.class)
+	public ResponseEntity<List<ExceptionMessage>> hadleValidacaoSala(SalaNaoExisteException exception)
+	{
+		String mensagem = exception.getMessage();
+	    ExceptionMessage exceptionMessage = new ExceptionMessage(Instant.now(), HttpStatus.BAD_REQUEST.value(), mensagem);
+	    return ResponseEntity.badRequest().body(List.of(exceptionMessage));
+	}
 }

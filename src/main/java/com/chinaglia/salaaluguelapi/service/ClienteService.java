@@ -1,9 +1,13 @@
 package com.chinaglia.salaaluguelapi.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.chinaglia.salaaluguelapi.dto.ClienteRequestDTO;
 import com.chinaglia.salaaluguelapi.dto.ClienteResponseDTO;
+import com.chinaglia.salaaluguelapi.dto.PessoaFisicaResponseDTO;
 import com.chinaglia.salaaluguelapi.entity.Cliente;
 import com.chinaglia.salaaluguelapi.entity.PessoaFisica;
 import com.chinaglia.salaaluguelapi.entity.PessoaJuridica;
@@ -57,16 +61,31 @@ public class ClienteService {
 	    return clienteMapper.toDto(cliente);
 	}
 	
+	public List<ClienteResponseDTO> findAll()
+	{
+		ClienteMapper clienteMapper = new ClienteMapper();
+		
+		List<ClienteResponseDTO> clientesResponseDTO = new ArrayList<>();
+		List<Cliente> clientes = clienteRepository.findAll();
+		
+		for(Cliente cliente : clientes) 
+		{
+			ClienteResponseDTO clienteResponseDTO = clienteMapper.toDto(cliente);
+			clientesResponseDTO.add(clienteResponseDTO);
+		}
+		
+		return clientesResponseDTO;
+	}
 	
-	  public boolean isCPFExiste(String cpf) 
-	  { 
+    public boolean isCPFExiste(String cpf) 
+    { 
 		  if(cpf != null) 
 		  {
 			  return pessoaFisicaRepository.existsByCpf(cpf);
 		  } 
 		  
 		  return false;
-	  }
+    }
 	 
 	
 }

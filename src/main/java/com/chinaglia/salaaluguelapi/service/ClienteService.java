@@ -11,6 +11,7 @@ import com.chinaglia.salaaluguelapi.dto.PessoaFisicaResponseDTO;
 import com.chinaglia.salaaluguelapi.entity.Cliente;
 import com.chinaglia.salaaluguelapi.entity.PessoaFisica;
 import com.chinaglia.salaaluguelapi.entity.PessoaJuridica;
+import com.chinaglia.salaaluguelapi.exception.ClienteNaoExisteException;
 import com.chinaglia.salaaluguelapi.exception.CpfJaExisteException;
 import com.chinaglia.salaaluguelapi.mapper.ClienteMapper;
 import com.chinaglia.salaaluguelapi.mapper.PessoaFisicaMapper;
@@ -75,6 +76,49 @@ public class ClienteService {
 		}
 		
 		return clientesResponseDTO;
+	}
+	
+	public ClienteResponseDTO update(Long id, ClienteRequestDTO clienteRequestDTO) {
+
+	    Cliente cliente = clienteRepository.findById(id)
+	            .orElseThrow(() -> new ClienteNaoExisteException("Cliente não encontrado"));
+
+	    ClienteMapper clienteMapper = new ClienteMapper();
+
+	    cliente.setTelefone(clienteRequestDTO.telefone());
+
+	    if (clienteRequestDTO.pessoaFisicaRequestDTO() != null) {
+
+	        PessoaFisica pessoaFisica = cliente.getPessoaFisica();
+
+	        if (pessoaFisica == null) {
+	            pessoaFisica = new PessoaFisica();
+	            pessoaFisica.setCliente(cliente);
+	            cliente.setPessoaFisica(pessoaFisica);
+	        }
+
+	        pessoaFisica.setNome(clienteRequestDTO.pessoaFisicaRequestDTO().nome());
+	        pessoaFisica.setCpf(clienteRequestDTO.pessoaFisicaRequestDTO().cpf());
+	        pessoaFisica.setRg(clienteRequestDTO.pessoaFisicaRequestDTO().rg());
+
+	    } else if (clienteRequestDTO.pessoaJuridicaRequestDTO() != null) {
+
+	        PessoaJuridica pessoaJuridica = cliente.getPessoaJuridica();
+
+	        if (pessoaJuridica == null) {
+	            pessoaJuridica = new PessoaJuridica();
+	            pessoaJuridica.setCliente(cliente);
+	            cliente.setPessoaJuridica(pessoaJuridica);
+	        }
+
+	        pessoaJuridica.setCnpj(clienteRequestDTO.pessoaJuridicaRequestDTO().cnpj());
+	        pessoaJuridica.setRazaoSocial(clienteRequestDTO.pessoaJuridicaRequestDTO().razaoSocial());
+	        pessoaJuridica.setNomeFantasia(clienteRequestDTO.pessoaJuridicaRequestDTO().nomeFantasia());
+	    }
+
+	    Cliente clienteAtualizado = clienteRepository.save(cliente);
+
+	    return clienteMapper.toDto(clienteAtualizado);
 	}
 	
     public boolean isCPFExiste(String cpf) 

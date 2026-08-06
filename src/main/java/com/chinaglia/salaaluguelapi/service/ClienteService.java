@@ -42,7 +42,7 @@ public class ClienteService {
 	        }
 	        
 	        pessoaFisica.setCliente(cliente);
-	        cliente.setPessoaFisica(pessoaFisica);
+	        cliente.setPessoaFisica(pessoaFisica); 
 	    }
 	    else 
 	    {

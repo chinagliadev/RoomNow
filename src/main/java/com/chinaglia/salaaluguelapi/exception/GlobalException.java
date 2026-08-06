@@ -1,18 +1,13 @@
 package com.chinaglia.salaaluguelapi.exception;
 
 import java.time.Instant;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 @ControllerAdvice
@@ -65,4 +60,13 @@ public class GlobalException{
 	    ExceptionMessage exceptionMessage = new ExceptionMessage(Instant.now(), HttpStatus.BAD_REQUEST.value(), mensagem);
 	    return ResponseEntity.badRequest().body(List.of(exceptionMessage));
 	}
+	
+	@ExceptionHandler(UsuarioNaoExisteCadastro.class)
+	public ResponseEntity<List<ExceptionMessage>> hadleValidacaoUsuario(UsuarioNaoExisteCadastro exception)
+	{
+		String mensagem = exception.getMessage();
+	    ExceptionMessage exceptionMessage = new ExceptionMessage(Instant.now(), HttpStatus.BAD_REQUEST.value(), mensagem);
+	      return ResponseEntity.badRequest().body(List.of(exceptionMessage));
+	}
+	
 }

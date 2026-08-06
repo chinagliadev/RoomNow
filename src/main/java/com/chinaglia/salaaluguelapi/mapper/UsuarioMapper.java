@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 
 import com.chinaglia.salaaluguelapi.dto.UsuarioDTO;
 import com.chinaglia.salaaluguelapi.entity.Usuario;
-import com.chinaglia.salaaluguelapi.enums.UserRole;
 
 @Component
 public class UsuarioMapper implements BaseMapper<UsuarioDTO, UsuarioDTO, Usuario>{

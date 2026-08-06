@@ -104,4 +104,22 @@ public class AluguelSala implements Serializable{
 		return Objects.equals(id, other.id);
 	}
 	
+	public BigDecimal getValorTotal() {
+
+	    if (data_hora_inicio == null || data_hora_fim == null || sala == null) {
+	        return BigDecimal.ZERO;
+	    }
+
+	    int horaInicio = data_hora_inicio.getHour();
+	    int horaFim = data_hora_fim.getHour();
+
+	    int quantidadeHoras = horaFim - horaInicio;
+
+	    if (quantidadeHoras <= 0) {
+	        return BigDecimal.ZERO;
+	    }
+
+	    return sala.getValor_hora().multiply(BigDecimal.valueOf(quantidadeHoras));
+	}
+	
 }

@@ -8,7 +8,6 @@ import java.util.Set;
 import org.springframework.stereotype.Service;
 
 import com.chinaglia.salaaluguelapi.dto.SalaRecursoRequestDTO;
-import com.chinaglia.salaaluguelapi.dto.SalaRecursoResponseDTO;
 import com.chinaglia.salaaluguelapi.dto.SalaRequestDTO;
 import com.chinaglia.salaaluguelapi.dto.SalaResponseDTO;
 import com.chinaglia.salaaluguelapi.entity.Recurso;
